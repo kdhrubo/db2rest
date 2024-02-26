@@ -5,8 +5,8 @@ server:
     session:
       timeout: 90m
 
-spring:
 
+spring:
 
   threads:
     virtual:
@@ -22,6 +22,17 @@ spring:
       pool-name: db2rest-platform-hikari-pool
       data-source-properties:
         reWriteBatchedInserts: true
+
+    ai:
+      postgresml:
+        enabled: false
+        embedding:
+          options:
+            transformer: distilbert-base-uncased
+            vectorType: PG_ARRAY
+            metadataMode: EMBED
+            kwargs:
+              device: cpu
 
 db2rest:
   unKeyDev:
