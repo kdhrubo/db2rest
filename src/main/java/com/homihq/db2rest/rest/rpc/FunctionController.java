@@ -2,8 +2,10 @@ package com.homihq.db2rest.rest.rpc;
 
 import com.homihq.db2rest.core.service.FunctionService;
 import com.homihq.db2rest.jdbc.service.JdbcFunctionService;
+import com.homihq.db2rest.mongodb.MongoDialect;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.Map;
 @RequestMapping("function")
 @Slf4j
 @RequiredArgsConstructor
+@ConditionalOnMissingBean(MongoDialect.class)
 public class FunctionController {
 
     private final FunctionService functionService;

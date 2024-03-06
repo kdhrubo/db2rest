@@ -3,6 +3,7 @@ package com.homihq.db2rest.rest;
 import com.homihq.db2rest.core.service.*;
 import com.homihq.db2rest.core.service.ProcedureService;
 import com.homihq.db2rest.jdbc.service.*;
+import com.homihq.db2rest.mongodb.MongoDialect;
 import com.homihq.db2rest.rest.create.BulkCreateController;
 import com.homihq.db2rest.rest.create.CreateController;
 import com.homihq.db2rest.rest.create.bulk.DataProcessor;
@@ -11,6 +12,7 @@ import com.homihq.db2rest.rest.read.*;
 import com.homihq.db2rest.rest.rpc.FunctionController;
 import com.homihq.db2rest.rest.rpc.ProcedureController;
 import com.homihq.db2rest.rest.update.UpdateController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,13 +38,13 @@ public class RestApiConfiguration {
     }
 
     @Bean
-    public ExistsQueryController existsQueryController(JdbcExistsQueryService jdbcExistsQueryService) {
-        return new ExistsQueryController(jdbcExistsQueryService);
+    public ExistsQueryController existsQueryController(ExistsQueryService existsQueryService) {
+        return new ExistsQueryController(existsQueryService);
     }
 
     @Bean
-    public CustomQueryController customQueryController(JdbcCustomQueryService jdbcCustomQueryService) {
-        return new CustomQueryController(jdbcCustomQueryService);
+    public CustomQueryController customQueryController(CustomQueryService customQueryService) {
+        return new CustomQueryController(customQueryService);
     }
 
     @Bean
@@ -70,11 +72,13 @@ public class RestApiConfiguration {
 
     //RPC
     @Bean
+    @ConditionalOnMissingBean(MongoDialect.class)
     public FunctionController functionController(FunctionService functionService) {
         return new FunctionController(functionService);
     }
 
     @Bean
+    @ConditionalOnMissingBean(MongoDialect.class)
     public ProcedureController procedureController(ProcedureService procedureService) {
         return new ProcedureController(procedureService);
     }

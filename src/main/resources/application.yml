@@ -16,7 +16,6 @@ spring:
       enabled: true
 
   datasource:
-
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
@@ -26,6 +25,13 @@ spring:
       pool-name: db2rest-platform-hikari-pool
       data-source-properties:
         reWriteBatchedInserts: true
+  data:
+    mongodb:
+      host: ${MONGODB_HOST}
+      port: ${MONGODB_PORT}
+      database: ${MONGODB_DB_NAME}
+      username: ${MONGODB_USER}
+      password: ${MONGODB_PASSWORD}
 
   banner:
     location: classpath:banner.txt
@@ -56,7 +62,6 @@ d1:
   accountId: ${D1_ACCOUNT_ID}
   dbId: ${D1_DB_ID}
   apiKey: ${D1_API_KEY}
-
 
 logging:
   level:
