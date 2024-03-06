@@ -12,7 +12,6 @@ spring:
       enabled: true
 
   datasource:
-
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
@@ -50,12 +49,18 @@ d1:
   dbId: ${D1_DB_ID}
   apiKey: ${D1_API_KEY}
 
+mongodb:
+  host: ${MONGODB_HOST}
+  port: ${MONGODB_PORT}
+  database: ${MONGODB_DB_NAME}
+  user-name: ${MONGODB_USER}
+  password: ${MONGODB_PASSWORD}
 
 logging:
   level:
     com.homihq.db2rest:
       rest: DEBUG
-    org.springframework.web : INFO
+    org.springframework.web : DEBUG
     schemacrawler:
       schemacrawler: ERROR
       crawl: ERROR
@@ -65,8 +70,8 @@ logging:
           scheduler: ERROR
     org:
       springframework:
-        beans : INFO
-        web: INFO
+        beans : DEBUG
+        web: DEBUG
         test:
           context:
             jdbc: DEBUG
