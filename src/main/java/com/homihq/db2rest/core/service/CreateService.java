@@ -8,4 +8,5 @@ public interface CreateService {
 
     CreateResponse save(String schemaName, String tableName, List<String> includedColumns,
                         Map<String, Object> data, boolean tsIdEnabled);
+
 }

@@ -6,11 +6,11 @@ import com.homihq.db2rest.exception.GenericDataAccessException;
 import com.homihq.db2rest.rest.read.dto.ExistsResponse;
 import com.homihq.db2rest.rest.read.dto.ReadContext;
 import com.homihq.db2rest.jdbc.processor.ReadProcessor;
-import com.homihq.db2rest.rest.read.sql.QueryCreatorTemplate;
+import com.homihq.db2rest.jdbc.sql.QueryCreatorTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -29,8 +29,8 @@ public class JdbcExistsQueryService implements ExistsQueryService {
         }
 
         String sql = queryCreatorTemplate.createExistsQuery(readContext);
-        log.info("{}", sql);
-        log.info("{}", readContext.getParamMap());
+        log.debug("{}", sql);
+        log.debug("{}", readContext.getParamMap());
 
         try {
 			return dbOperationService.exists(readContext.getParamMap(), sql);

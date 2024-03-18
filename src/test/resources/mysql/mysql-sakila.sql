@@ -22,6 +22,54 @@ CREATE SCHEMA sakila;
 USE sakila;
 
 --
+-- Table structure for table `tops`
+--
+
+CREATE TABLE tops (
+       top_item varchar(30) NOT NULL,
+       color varchar(30) NOT NULL,
+       size varchar(2) NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `bottoms`
+--
+
+CREATE TABLE bottoms (
+     bottom_item varchar(30) NOT NULL,
+     color varchar(30) NOT NULL,
+     size varchar(2) NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE users (
+     auid int(10) UNSIGNED NOT NULL,
+     username varchar(100) NOT NULL,
+     password varchar(150) NOT NULL,
+     createdate datetime NOT NULL,
+     isActive tinyint(1) NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `userprofile`
+--
+
+CREATE TABLE userprofile (
+   apid int(10) UNSIGNED NOT NULL,
+   auid int(10) UNSIGNED NOT NULL,
+   firstname varchar(50) NOT NULL,
+   lastname varchar(50) NOT NULL,
+   email varchar(100) NOT NULL,
+   phone varchar(45) NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--
 -- Table structure for table `actor`
 --
 
@@ -103,6 +151,7 @@ CREATE TABLE film (
   rating ENUM('G','PG','PG-13','R','NC-17') DEFAULT 'G',
   special_features SET('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') DEFAULT NULL,
   last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  prequel_film_id SMALLINT UNSIGNED DEFAULT NULL,
   PRIMARY KEY  (film_id),
   KEY idx_title (title),
   KEY idx_fk_language_id (language_id),

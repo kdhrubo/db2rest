@@ -8,6 +8,7 @@ import com.homihq.db2rest.rest.read.dto.CountResponse;
 import com.homihq.db2rest.rest.read.dto.ExistsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -31,8 +32,6 @@ public class JdbcOperationService implements DbOperationService {
 
     @Override
     public List<Map<String, Object>> read(Map<String, Object> paramMap, String sql) {
-        int hashCode = this.namedParameterJdbcTemplate.getJdbcTemplate().getDataSource().hashCode();
-        log.info("**** hashcode - {}", hashCode);
 
         return namedParameterJdbcTemplate.queryForList(sql, paramMap);
     }
@@ -40,6 +39,11 @@ public class JdbcOperationService implements DbOperationService {
     @Override
     public Map<String, Object> findOne(String sql, Map<String, Object> paramMap) {
         return namedParameterJdbcTemplate.queryForMap(sql, paramMap);
+    }
+
+    @Override
+    public Map<String, Object> findOne(Query query, String collectionName) {
+        return null;
     }
 
     @Override
@@ -82,6 +86,11 @@ public class JdbcOperationService implements DbOperationService {
 
 
         return new CreateResponse(row, keyHolder.getKeys());
+    }
+
+    @Override
+    public CreateResponse create(Map<String, Object> data, String collectionName) {
+        return null;
     }
 
     @Override

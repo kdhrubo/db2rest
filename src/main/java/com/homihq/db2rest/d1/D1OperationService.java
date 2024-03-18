@@ -10,6 +10,7 @@ import com.homihq.db2rest.rest.read.dto.CountResponse;
 import com.homihq.db2rest.rest.read.dto.ExistsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.query.Query;
 
 
 import java.util.List;
@@ -58,6 +59,11 @@ public class D1OperationService implements DbOperationService {
     }
 
     @Override
+    public Map<String, Object> findOne(Query query, String collectionName) {
+        return null;
+    }
+
+    @Override
     public ExistsResponse exists(Map<String, Object> paramMap, String sql) {
         return null;
     }
@@ -99,6 +105,11 @@ public class D1OperationService implements DbOperationService {
         return new CreateResponse(1, null);
 
 
+    }
+
+    @Override
+    public CreateResponse create(Map<String, Object> data, String collectionName) {
+        return null;
     }
 
     @Override

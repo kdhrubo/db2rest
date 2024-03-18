@@ -10,15 +10,18 @@ import com.homihq.db2rest.rest.read.dto.ReadContext;
 import com.homihq.db2rest.jdbc.rsql.operator.handler.OperatorMap;
 import com.homihq.db2rest.jdbc.rsql.parser.RSQLParserBuilder;
 import com.homihq.db2rest.jdbc.rsql.visitor.BaseRSQLVisitor;
+import com.homihq.db2rest.schema.AliasGenerator;
 import com.homihq.db2rest.schema.SchemaCache;
 import cz.jirutka.rsql.parser.ast.Node;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 @Slf4j
@@ -29,6 +32,7 @@ public class JoinProcessor implements ReadProcessor {
     private final SchemaCache schemaCache;
     private final OperatorMap operatorMap;
     private final Dialect dialect;
+    private final AliasGenerator aliasGenerator;
     @Override
     public void process(ReadContext readContext) {
         List<JoinDetail> joins = readContext.getJoins();
@@ -37,17 +41,42 @@ public class JoinProcessor implements ReadProcessor {
 
         DbTable rootTable = readContext.getRoot();
 
+        List<DbTable> allJoinTables = new ArrayList<>();
+        allJoinTables.add(rootTable);
+
         for(JoinDetail joinDetail : joins) {
+
+            rootTable = reviewRootTable(allJoinTables, joinDetail, rootTable);
+
             String tableName = joinDetail.table();
-
             DbTable table = schemaCache.getTable(tableName);
-
+            table = table.copyWithAlias(aliasGenerator.getAlias(tableName));
             List<DbColumn> columnList = addColumns(table, joinDetail.fields());
-
             readContext.addColumns(columnList);
-
             addJoin(table, rootTable, joinDetail, readContext);
+
+
+            allJoinTables.add(rootTable);
+
+            rootTable = table;
         }
+    }
+
+    private DbTable reviewRootTable(List<DbTable> allJoinTables, JoinDetail joinDetail, DbTable rootTable) {
+        if(allJoinTables.size() == 1) return rootTable;
+
+        if(joinDetail.hasWith()) {
+            //check if existing table
+            String withTable = joinDetail.withTable();
+            Optional<DbTable> newRoot = allJoinTables.stream()
+                    .filter(t -> StringUtils.equalsIgnoreCase(withTable, t.name()))
+                    .findFirst();
+
+            //look in cache
+            return newRoot.orElseGet(() -> schemaCache.getTable(withTable));
+        }
+
+        return rootTable;
     }
 
     private void addJoin(DbTable table, DbTable rootTable, JoinDetail joinDetail, ReadContext readContext) {
@@ -125,7 +154,7 @@ public class JoinProcessor implements ReadProcessor {
         // - field can be *
         // - can be set of fields from the given table
 
-        log.info("Fields - {}", fields);
+        log.debug("Fields - {}", fields);
 
         List<DbColumn> columnList = new ArrayList<>();
 

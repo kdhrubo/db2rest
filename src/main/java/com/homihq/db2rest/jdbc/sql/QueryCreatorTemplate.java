@@ -1,4 +1,4 @@
-package com.homihq.db2rest.rest.read.sql;
+package com.homihq.db2rest.jdbc.sql;
 
 import com.homihq.db2rest.core.model.DbColumn;
 import com.homihq.db2rest.core.model.DbSort;
@@ -62,7 +62,7 @@ public class QueryCreatorTemplate {
 
     public String createQuery(ReadContext readContext) {
 
-        log.info("**** Preparing to render ****");
+        log.debug("**** Preparing to render ****");
 
         Map<String,Object> data = new HashMap<>();
         data.put("columns", createProjections(readContext.getCols()));
@@ -77,6 +77,8 @@ public class QueryCreatorTemplate {
 
         if(readContext.getLimit() > -1) data.put("limit", readContext.getLimit());
         if(readContext.getOffset() > -1) data.put("offset", readContext.getOffset());
+
+        //log.info("data - {}", data);
 
 
         Context context = new Context();

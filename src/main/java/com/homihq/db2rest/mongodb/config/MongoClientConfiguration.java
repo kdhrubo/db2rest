@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 @ConditionalOnProperty(prefix = "db2rest.datasource", name = "type", havingValue = "mongo")
 public class MongoClientConfiguration {

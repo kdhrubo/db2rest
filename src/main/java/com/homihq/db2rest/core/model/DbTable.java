@@ -13,9 +13,19 @@ public record DbTable(String schema, String name, String fullName, String alias,
         return name + " " + alias;
     }
 
+    public DbTable copyWithAlias(String tableAlias) {
+        List<DbColumn> columns =
+        dbColumns.stream()
+                .map(col -> col.copyWithTableAlias(tableAlias))
+                .toList();
+
+        return new DbTable(
+                schema, name, fullName, tableAlias,  columns
+        );
+    }
 
     public DbColumn buildColumn(String columnName) {
-        log.info("columnName - {}", columnName);
+        log.debug("columnName - {}", columnName);
 
         DbAlias dbAlias = getAlias(columnName);
 

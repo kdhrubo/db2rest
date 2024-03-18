@@ -5,16 +5,22 @@ import com.homihq.db2rest.rest.create.dto.CreateBulkResponse;
 import com.homihq.db2rest.rest.create.dto.CreateResponse;
 import com.homihq.db2rest.rest.read.dto.CountResponse;
 import com.homihq.db2rest.rest.read.dto.ExistsResponse;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
 import java.util.Map;
 
 public interface DbOperationService {
+
     int update(Map<String, Object> paramMap, String sql);
+
+    default List<Object> read(String collection) { return null;}
 
     List<Map<String, Object>> read(Map<String, Object> paramMap, String sql);
 
     Map<String, Object> findOne(String sql, Map<String, Object> paramMap);
+
+    Map<String, Object> findOne(Query query, String collectionName);
 
     ExistsResponse exists(Map<String, Object> paramMap, String sql);
 
@@ -25,6 +31,8 @@ public interface DbOperationService {
     int delete(Map<String, Object> params, String sql);
 
     CreateResponse create(Map<String, Object> data, String sql, DbTable dbTable);
+
+    CreateResponse create(Map<String, Object> data, String collectionName);
 
     CreateBulkResponse batchUpdate(List<Map<String, Object>> dataList, String sql, DbTable dbTable);
 }
