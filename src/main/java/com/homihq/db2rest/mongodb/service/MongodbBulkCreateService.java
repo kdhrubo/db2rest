@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
-public class MongoBulkCreateService implements BulkCreateService {
+public class MongodbBulkCreateService implements BulkCreateService {
     private final DbOperationService dbOperationService;
 
     private final Dialect dialect;

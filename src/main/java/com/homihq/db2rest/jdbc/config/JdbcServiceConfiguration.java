@@ -1,19 +1,37 @@
 package com.homihq.db2rest.jdbc.config;
 
 
+import com.homihq.db2rest.core.DbOperationService;
+import com.homihq.db2rest.core.Dialect;
 import com.homihq.db2rest.core.config.Db2RestConfigProperties;
-import com.homihq.db2rest.core.*;
-import com.homihq.db2rest.core.service.*;
-import com.homihq.db2rest.core.service.ProcedureService;
-import com.homihq.db2rest.jdbc.processor.ReadProcessor;
-import com.homihq.db2rest.jdbc.service.*;
+import com.homihq.db2rest.core.service.BulkCreateService;
+import com.homihq.db2rest.core.service.CountQueryService;
 import com.homihq.db2rest.core.service.CreateService;
+import com.homihq.db2rest.core.service.CustomQueryService;
+import com.homihq.db2rest.core.service.DeleteService;
+import com.homihq.db2rest.core.service.ExistsQueryService;
+import com.homihq.db2rest.core.service.FindOneService;
+import com.homihq.db2rest.core.service.FunctionService;
+import com.homihq.db2rest.core.service.ProcedureService;
+import com.homihq.db2rest.core.service.ReadService;
+import com.homihq.db2rest.core.service.UpdateService;
+import com.homihq.db2rest.jdbc.processor.ReadProcessor;
+import com.homihq.db2rest.jdbc.service.JdbcBulkCreateService;
+import com.homihq.db2rest.jdbc.service.JdbcCountQueryService;
+import com.homihq.db2rest.jdbc.service.JdbcCreateService;
+import com.homihq.db2rest.jdbc.service.JdbcCustomQueryService;
+import com.homihq.db2rest.jdbc.service.JdbcDeleteService;
+import com.homihq.db2rest.jdbc.service.JdbcExistsQueryService;
+import com.homihq.db2rest.jdbc.service.JdbcFindOneService;
+import com.homihq.db2rest.jdbc.service.JdbcFunctionService;
+import com.homihq.db2rest.jdbc.service.JdbcProcedureService;
+import com.homihq.db2rest.jdbc.service.JdbcReadService;
+import com.homihq.db2rest.jdbc.service.JdbcUpdateService;
 import com.homihq.db2rest.jdbc.sql.CreateCreatorTemplate;
 import com.homihq.db2rest.jdbc.sql.DeleteCreatorTemplate;
+import com.homihq.db2rest.jdbc.sql.QueryCreatorTemplate;
 import com.homihq.db2rest.jdbc.sql.UpdateCreatorTemplate;
 import com.homihq.db2rest.jdbc.tsid.TSIDProcessor;
-import com.homihq.db2rest.jdbc.service.JdbcDeleteService;
-import com.homihq.db2rest.jdbc.sql.QueryCreatorTemplate;
 import com.homihq.db2rest.schema.SchemaCache;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -48,9 +66,9 @@ public class JdbcServiceConfiguration {
     //QUERY SERVICE
     @Bean
     public CountQueryService countQueryService(
-                                               QueryCreatorTemplate queryCreatorTemplate,
-                                               List<ReadProcessor> processorList,
-                                               DbOperationService dbOperationService) {
+            QueryCreatorTemplate queryCreatorTemplate,
+            List<ReadProcessor> processorList,
+            DbOperationService dbOperationService) {
         return new JdbcCountQueryService(dbOperationService, processorList, queryCreatorTemplate);
     }
 
@@ -86,11 +104,10 @@ public class JdbcServiceConfiguration {
     //UPDATE SERVICE
     @Bean
     public UpdateService updateService(
-            Db2RestConfigProperties db2RestConfigProperties,
             SchemaCache schemaCache,
             UpdateCreatorTemplate updateCreatorTemplate,
             DbOperationService dbOperationService, Dialect dialect) {
-        return new JdbcUpdateService(db2RestConfigProperties, schemaCache, updateCreatorTemplate, dbOperationService, dialect);
+        return new JdbcUpdateService(schemaCache, updateCreatorTemplate, dbOperationService, dialect);
     }
 
 
@@ -98,9 +115,9 @@ public class JdbcServiceConfiguration {
     @Bean
     public DeleteService deleteService(
             Db2RestConfigProperties db2RestConfigProperties,
-    SchemaCache schemaCache,
-    DeleteCreatorTemplate deleteCreatorTemplate,
-    DbOperationService dbOperationService, Dialect dialect) {
+            SchemaCache schemaCache,
+            DeleteCreatorTemplate deleteCreatorTemplate,
+            DbOperationService dbOperationService, Dialect dialect) {
         return new JdbcDeleteService(db2RestConfigProperties, schemaCache, deleteCreatorTemplate, dbOperationService, dialect);
     }
 

@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
-public class MongoDialect implements Dialect {
+public class MongodbDialect implements Dialect {
 
     @Override
     public void processTypes(DbTable table, List<String> insertableColumns, Map<String, Object> data) {

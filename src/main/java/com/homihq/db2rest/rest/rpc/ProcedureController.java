@@ -1,7 +1,7 @@
 package com.homihq.db2rest.rest.rpc;
 
 import com.homihq.db2rest.core.service.ProcedureService;
-import com.homihq.db2rest.mongodb.MongoDialect;
+import com.homihq.db2rest.mongodb.MongodbDialect;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping("procedure")
 @Slf4j
 @RequiredArgsConstructor
-@ConditionalOnMissingBean(MongoDialect.class)
+@ConditionalOnMissingBean(MongodbDialect.class)
 public class ProcedureController {
 
     private final ProcedureService procedureService;

@@ -87,11 +87,10 @@ public class D1ServiceConfiguration {
     //UPDATE SERVICE
     @Bean
     public UpdateService updateService(
-            Db2RestConfigProperties db2RestConfigProperties,
             SchemaCache schemaCache,
             UpdateCreatorTemplate updateCreatorTemplate,
             DbOperationService dbOperationService, Dialect dialect) {
-        return new JdbcUpdateService(db2RestConfigProperties, schemaCache, updateCreatorTemplate, dbOperationService, dialect);
+        return new JdbcUpdateService(schemaCache, updateCreatorTemplate, dbOperationService, dialect);
     }
 
 
@@ -102,7 +101,8 @@ public class D1ServiceConfiguration {
     SchemaCache schemaCache,
     DeleteCreatorTemplate deleteCreatorTemplate,
     DbOperationService dbOperationService, Dialect dialect) {
-        return new JdbcDeleteService(db2RestConfigProperties, schemaCache, deleteCreatorTemplate, dbOperationService, dialect);
+        return new JdbcDeleteService(db2RestConfigProperties, schemaCache, deleteCreatorTemplate,
+                dbOperationService, dialect);
     }
 
     //RPC

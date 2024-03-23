@@ -3,14 +3,14 @@ package com.homihq.db2rest.jdbc.service;
 import com.homihq.db2rest.core.DbOperationService;
 import com.homihq.db2rest.core.service.ReadService;
 import com.homihq.db2rest.exception.GenericDataAccessException;
-import com.homihq.db2rest.rest.read.dto.ReadContext;
-import com.homihq.db2rest.jdbc.sql.QueryCreatorTemplate;
 import com.homihq.db2rest.jdbc.processor.ReadProcessor;
+import com.homihq.db2rest.jdbc.sql.QueryCreatorTemplate;
+import com.homihq.db2rest.rest.read.dto.ReadContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import java.util.List;
 
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,11 +33,9 @@ public class JdbcReadService implements ReadService {
         try {
             return dbOperationService.read(readContext.getParamMap(), sql);
         } catch (DataAccessException e) {
-            log.error("Error in read op : " , e);
+            log.error("Error in read op : ", e);
             throw new GenericDataAccessException(e.getMostSpecificCause().getMessage());
         }
     }
-
-
 
 }

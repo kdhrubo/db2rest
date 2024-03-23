@@ -17,8 +17,6 @@ public interface DbOperationService {
 
     Map<String, Object> findOne(String sql, Map<String, Object> paramMap);
 
-    Map<String, Object> findOne(Query query, String collectionName);
-
     ExistsResponse exists(Map<String, Object> paramMap, String sql);
 
     CountResponse count(Map<String, Object> paramMap, String sql);
@@ -29,7 +27,9 @@ public interface DbOperationService {
 
     CreateResponse create(Map<String, Object> data, String sql, DbTable dbTable);
 
-    CreateResponse create(Map<String, Object> data, String collectionName);
-
     CreateBulkResponse batchUpdate(List<Map<String, Object>> dataList, String sql, DbTable dbTable);
+
+    Map<String, Object> findOne(Query query, String collectionName);
+
+    CreateResponse create(Map<String, Object> data, String collectionName);
 }

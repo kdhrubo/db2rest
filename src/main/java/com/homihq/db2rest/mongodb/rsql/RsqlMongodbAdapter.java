@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
-public class RsqlMongoAdapter {
+public class RsqlMongodbAdapter {
 
     private final ComparisonToCriteriaConverter converter;
 

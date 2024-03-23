@@ -1,4 +1,4 @@
-package com.homihq.db2rest.d1;
+package com.homihq.db2rest.mongodb;
 
 import com.homihq.db2rest.core.DbOperationService;
 import com.homihq.db2rest.core.model.DbTable;
@@ -6,12 +6,11 @@ import com.homihq.db2rest.rest.create.dto.CreateBulkResponse;
 import com.homihq.db2rest.rest.create.dto.CreateResponse;
 import com.homihq.db2rest.rest.read.dto.CountResponse;
 import com.homihq.db2rest.rest.read.dto.ExistsResponse;
-import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
 import java.util.Map;
 
-public interface D1OperationService extends DbOperationService {
+public interface MongodbOperationService extends DbOperationService {
 
     @Override
     default Map<String, Object> findOne(String sql, Map<String, Object> paramMap) {
@@ -34,17 +33,28 @@ public interface D1OperationService extends DbOperationService {
     }
 
     @Override
-    default Map<String, Object> findOne(Query query, String collectionName) {
-        return Map.of();
-    }
-
-    @Override
-    default CreateResponse create(Map<String, Object> data, String collectionName) {
-        return null;
-    }
-
-    @Override
     default CreateBulkResponse batchUpdate(List<Map<String, Object>> dataList, String sql, DbTable dbTable) {
         return null;
     }
+
+    @Override
+    default int update(Map<String, Object> paramMap, String sql) {
+        return 0;
+    }
+
+    @Override
+    default List<Map<String, Object>> read(Map<String, Object> paramMap, String sql) {
+        return List.of();
+    }
+
+    @Override
+    default int delete(Map<String, Object> params, String sql) {
+        return 0;
+    }
+
+    @Override
+    default CreateResponse create(Map<String, Object> data, String sql, DbTable dbTable) {
+        return null;
+    }
+
 }

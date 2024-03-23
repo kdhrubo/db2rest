@@ -2,8 +2,7 @@ package com.homihq.db2rest.rest;
 
 import com.homihq.db2rest.core.service.*;
 import com.homihq.db2rest.core.service.ProcedureService;
-import com.homihq.db2rest.jdbc.service.*;
-import com.homihq.db2rest.mongodb.MongoDialect;
+import com.homihq.db2rest.mongodb.MongodbDialect;
 import com.homihq.db2rest.rest.create.BulkCreateController;
 import com.homihq.db2rest.rest.create.CreateController;
 import com.homihq.db2rest.rest.create.bulk.DataProcessor;
@@ -72,13 +71,13 @@ public class RestApiConfiguration {
 
     //RPC
     @Bean
-    @ConditionalOnMissingBean(MongoDialect.class)
+    @ConditionalOnMissingBean(MongodbDialect.class)
     public FunctionController functionController(FunctionService functionService) {
         return new FunctionController(functionService);
     }
 
     @Bean
-    @ConditionalOnMissingBean(MongoDialect.class)
+    @ConditionalOnMissingBean(MongodbDialect.class)
     public ProcedureController procedureController(ProcedureService procedureService) {
         return new ProcedureController(procedureService);
     }

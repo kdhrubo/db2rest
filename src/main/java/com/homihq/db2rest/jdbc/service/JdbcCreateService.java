@@ -2,14 +2,14 @@ package com.homihq.db2rest.jdbc.service;
 
 import com.homihq.db2rest.core.DbOperationService;
 import com.homihq.db2rest.core.Dialect;
-import com.homihq.db2rest.core.service.CreateService;
-import com.homihq.db2rest.exception.GenericDataAccessException;
 import com.homihq.db2rest.core.model.DbColumn;
 import com.homihq.db2rest.core.model.DbTable;
+import com.homihq.db2rest.core.service.CreateService;
+import com.homihq.db2rest.exception.GenericDataAccessException;
 import com.homihq.db2rest.jdbc.sql.CreateCreatorTemplate;
+import com.homihq.db2rest.jdbc.tsid.TSIDProcessor;
 import com.homihq.db2rest.rest.create.dto.CreateContext;
 import com.homihq.db2rest.rest.create.dto.CreateResponse;
-import com.homihq.db2rest.jdbc.tsid.TSIDProcessor;
 import com.homihq.db2rest.schema.SchemaCache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,11 +47,11 @@ public class JdbcCreateService implements CreateService {
                     new ArrayList<>(includedColumns);
 
             //3. check if tsId is enabled and add those values for PK.
-            Map<String,Object> tsIdMap = null;
+            Map<String, Object> tsIdMap = null;
             if (tsIdEnabled) {
                 List<DbColumn> pkColumns = dbTable.buildPkColumns();
 
-                for(DbColumn pkColumn : pkColumns) {
+                for (DbColumn pkColumn : pkColumns) {
                     log.debug("Adding primary key columns - {}", pkColumn.name());
                     insertableColumns.add(pkColumn.name());
                 }
@@ -71,7 +71,7 @@ public class JdbcCreateService implements CreateService {
 
             CreateResponse createResponse = dbOperationService.create(data, sql, dbTable);
 
-            if(tsIdEnabled && Objects.isNull(createResponse.keys())) {
+            if (tsIdEnabled && Objects.isNull(createResponse.keys())) {
                 return new CreateResponse(createResponse.row(), tsIdMap);
             }
 
@@ -81,8 +81,6 @@ public class JdbcCreateService implements CreateService {
             log.error("Error", e);
             throw new GenericDataAccessException(e.getMostSpecificCause().getMessage());
         }
-
-
     }
 
 }

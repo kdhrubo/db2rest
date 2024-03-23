@@ -1,9 +1,10 @@
 package com.homihq.db2rest.d1.config;
 
+import com.homihq.db2rest.core.DbOperationService;
 import com.homihq.db2rest.d1.D1Dialect;
-import com.homihq.db2rest.d1.D1OperationService;
 import com.homihq.db2rest.d1.D1RestClient;
 import com.homihq.db2rest.d1.D1SchemaCache;
+import com.homihq.db2rest.d1.DefaultD1OperationService;
 import com.homihq.db2rest.schema.AliasGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,8 +35,8 @@ public class D1Configuration {
     }
 
     @Bean
-    public D1OperationService d1OperationService(RestTemplateBuilder restTemplateBuilder) {
-        return new D1OperationService(db1RestClient(restTemplateBuilder));
+    public DbOperationService defaultD1OperationService(RestTemplateBuilder restTemplateBuilder) {
+        return new DefaultD1OperationService(db1RestClient(restTemplateBuilder));
     }
 
     @Bean
@@ -45,7 +46,6 @@ public class D1Configuration {
 
         return new D1RestClient(dbUrl, restTemplateBuilder.build(), apiKey);
     }
-
 
 
     @Bean

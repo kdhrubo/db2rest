@@ -1,16 +1,16 @@
 package com.homihq.db2rest.jdbc.service;
 
-import com.homihq.db2rest.core.config.Db2RestConfigProperties;
 import com.homihq.db2rest.core.DbOperationService;
 import com.homihq.db2rest.core.Dialect;
+import com.homihq.db2rest.core.config.Db2RestConfigProperties;
+import com.homihq.db2rest.core.model.DbTable;
+import com.homihq.db2rest.core.model.DbWhere;
 import com.homihq.db2rest.core.service.DeleteService;
 import com.homihq.db2rest.exception.GenericDataAccessException;
-import com.homihq.db2rest.jdbc.sql.DeleteCreatorTemplate;
-import com.homihq.db2rest.core.model.DbWhere;
-import com.homihq.db2rest.core.model.DbTable;
-import com.homihq.db2rest.rest.delete.dto.DeleteContext;
 import com.homihq.db2rest.jdbc.rsql.parser.RSQLParserBuilder;
 import com.homihq.db2rest.jdbc.rsql.visitor.BaseRSQLVisitor;
+import com.homihq.db2rest.jdbc.sql.DeleteCreatorTemplate;
+import com.homihq.db2rest.rest.delete.dto.DeleteContext;
 import com.homihq.db2rest.schema.SchemaCache;
 import cz.jirutka.rsql.parser.ast.Node;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,6 @@ public class JdbcDeleteService implements DeleteService {
                 .table(dbTable).build();
 
 
-
         return executeDelete(filter, dbTable, context);
 
     }
@@ -50,7 +49,7 @@ public class JdbcDeleteService implements DeleteService {
 
         addWhere(filter, table, context);
         String sql =
-        deleteCreatorTemplate.deleteQuery(context);
+                deleteCreatorTemplate.deleteQuery(context);
 
         log.debug("{}", sql);
         log.debug("{}", context.getParamMap());
@@ -58,21 +57,19 @@ public class JdbcDeleteService implements DeleteService {
         try {
             return dbOperationService.delete(context.getParamMap(), sql);
         } catch (DataAccessException e) {
-            log.error("Error in delete op : " , e);
+            log.error("Error in delete op : ", e);
             throw new GenericDataAccessException(e.getMostSpecificCause().getMessage());
         }
     }
 
-
-
     private void addWhere(String filter, DbTable table, DeleteContext context) {
 
-        if(StringUtils.isNotBlank(filter)) {
+        if (StringUtils.isNotBlank(filter)) {
             context.createParamMap();
 
             DbWhere dbWhere = new DbWhere(
                     context.getTableName(),
-                    table, null ,context.getParamMap());
+                    table, null, context.getParamMap());
 
             Node rootNode = RSQLParserBuilder.newRSQLParser().parse(filter);
 

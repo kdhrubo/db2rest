@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-public class MongoCustomQueryService implements CustomQueryService {
+public class MongodbCustomQueryService implements CustomQueryService {
     @Override
     public Object find(QueryRequest queryRequest) {
         return null;

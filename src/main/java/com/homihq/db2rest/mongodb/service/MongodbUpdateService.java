@@ -4,7 +4,7 @@ import com.homihq.db2rest.core.service.UpdateService;
 
 import java.util.Map;
 
-public class MongoUpdateService implements UpdateService {
+public class MongodbUpdateService implements UpdateService {
     @Override
     public int patch(String schemaName, String collectionName, Map<String, Object> data, String filter) {
         return 0;

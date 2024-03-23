@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
-public class MongoCreateService implements CreateService {
+public class MongodbCreateService implements CreateService {
 
     private final DbOperationService dbOperationService;
 

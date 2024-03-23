@@ -1,9 +1,14 @@
 package com.homihq.db2rest.jdbc.config;
 
+import com.homihq.db2rest.core.DbOperationService;
 import com.homihq.db2rest.core.Dialect;
-import com.homihq.db2rest.jdbc.JdbcOperationService;
+import com.homihq.db2rest.jdbc.DefaultJdbcOperationService;
 import com.homihq.db2rest.jdbc.JdbcSchemaCache;
-import com.homihq.db2rest.jdbc.processor.*;
+import com.homihq.db2rest.jdbc.processor.JoinProcessor;
+import com.homihq.db2rest.jdbc.processor.OrderByProcessor;
+import com.homihq.db2rest.jdbc.processor.RootTableFieldProcessor;
+import com.homihq.db2rest.jdbc.processor.RootTableProcessor;
+import com.homihq.db2rest.jdbc.processor.RootWhereProcessor;
 import com.homihq.db2rest.jdbc.rsql.operator.handler.OperatorMap;
 import com.homihq.db2rest.schema.AliasGenerator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -23,8 +28,8 @@ public class JdbcSchemaManagerConfiguration {
     }
 
     @Bean
-    public JdbcOperationService operationService(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        return new JdbcOperationService(namedParameterJdbcTemplate);
+    public DbOperationService defaultJdbcOperationService(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        return new DefaultJdbcOperationService(namedParameterJdbcTemplate);
     }
 
     @Bean
@@ -52,9 +57,5 @@ public class JdbcSchemaManagerConfiguration {
     public RootWhereProcessor rootWhereProcessor(Dialect dialect) {
         return new RootWhereProcessor(dialect);
     }
-
-
-
-
 
 }
