@@ -22,7 +22,7 @@ public class MongoFindOneService implements FindOneService {
 
     @Override
     public Map<String, Object> findOne(ReadContext readContext) {
-        Query query = Query.query(rsqlMongoAdapter.getCriteria(readContext.getFilter(), Document.class));
+        Query query = Query.query(rsqlMongoAdapter.getCriteria(readContext.getFilter(), Object.class));
         var fields = readContext.getFields();
         if (StringUtils.isNotBlank(fields)) {
             query.fields().include(fields.split(","));

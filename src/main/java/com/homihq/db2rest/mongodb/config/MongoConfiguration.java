@@ -46,19 +46,8 @@ public class MongoConfiguration {
     }
 
     @Bean
-    public EntityFieldTypeConverter entityFieldTypeConverter(ConversionService conversionService,
-                                                             MongoMappingContext mongoMappingContext) {
-        return new EntityFieldTypeConverter(conversionService, mongoMappingContext);
-    }
-
-    @Bean
     public NoOpConverter noOpConverter() {
         return new NoOpConverter();
-    }
-
-    @Bean
-    public OperatorSpecificConverter operatorSpecificConverter() {
-        return new OperatorSpecificConverter();
     }
 
 }
